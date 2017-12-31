@@ -5,6 +5,7 @@ namespace ApiClients\Tests\Middleware\Xml;
 use ApiClients\Middleware\Xml\XmlEncodeMiddleware;
 use ApiClients\Middleware\Xml\XmlStream;
 use ApiClients\Tools\TestUtilities\TestCase;
+use ApiClients\Tools\Xml\XmlEncodeService;
 use React\EventLoop\Factory;
 use RingCentral\Psr7\BufferStream;
 use RingCentral\Psr7\Request;
@@ -15,7 +16,7 @@ class XmlEncodeMiddlewareTest extends TestCase
     public function testPre()
     {
         $loop = Factory::create();
-        $middleware = new XmlEncodeMiddleware();
+        $middleware = new XmlEncodeMiddleware(new XmlEncodeService($loop));
         $stream = new XmlStream(Constant::TREE);
         $request = new Request('GET', 'https://example.com', [], $stream);
 
@@ -31,7 +32,7 @@ class XmlEncodeMiddlewareTest extends TestCase
     public function testPreNoXml()
     {
         $loop = Factory::create();
-        $middleware = new XmlEncodeMiddleware();
+        $middleware = new XmlEncodeMiddleware(new XmlEncodeService($loop));
         $stream = new BufferStream(2);
         $stream->write('yo');
         $request = new Request('GET', 'https://example.com', [], $stream);

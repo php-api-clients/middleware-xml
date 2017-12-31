@@ -12,7 +12,7 @@
         "php": "^7.0",
         "api-clients/middleware": "^4.0",
         "api-clients/transport": "^3.1",
-        "openlss/lib-array2xml": "^0.5.1",
+        "api-clients/xml": "dev-master",
         "ringcentral/psr7": "^1.2"
     },
     "require-dev": {

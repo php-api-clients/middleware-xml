@@ -6,6 +6,7 @@ use ApiClients\Middleware\Xml\Options;
 use ApiClients\Middleware\Xml\XmlDecodeMiddleware;
 use ApiClients\Middleware\Xml\XmlStream;
 use ApiClients\Tools\TestUtilities\TestCase;
+use ApiClients\Tools\Xml\XmlDecodeService;
 use React\EventLoop\Factory;
 use RingCentral\Psr7\Response;
 use function Clue\React\Block\await;
@@ -24,7 +25,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPost(string $contentType)
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, ['Content-Type' => $contentType], Constant::XML);
 
         $body = await(
@@ -43,7 +44,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPostNoContentType()
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, [], '[]');
 
         self::assertSame(
@@ -58,7 +59,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPostNoContentTypeCheck()
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, [], Constant::XML);
 
         $body = await(
@@ -85,7 +86,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPostCustomTYpe()
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, ['Content-Type' => 'custom/type'], Constant::XML);
 
         $body = await(
@@ -112,7 +113,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPostNoJson()
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, []);
 
         self::assertSame(
@@ -127,7 +128,7 @@ class XmlDecodeMiddlewareTest extends TestCase
     public function testPostEmpty()
     {
         $loop = Factory::create();
-        $middleware = new XmlDecodeMiddleware();
+        $middleware = new XmlDecodeMiddleware(new XmlDecodeService($loop));
         $response = new Response(200, [], '');
 
         self::assertSame(

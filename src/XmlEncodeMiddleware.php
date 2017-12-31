@@ -7,7 +7,7 @@ use ApiClients\Foundation\Middleware\ErrorTrait;
 use ApiClients\Foundation\Middleware\MiddlewareInterface;
 use ApiClients\Foundation\Middleware\PostTrait;
 use ApiClients\Foundation\Transport\ParsedContentsInterface;
-use LSS\Array2XML;
+use ApiClients\Tools\Xml\XmlEncodeService;
 use Psr\Http\Message\RequestInterface;
 use React\Promise\CancellablePromiseInterface;
 use RingCentral\Psr7\BufferStream;
@@ -17,6 +17,19 @@ class XmlEncodeMiddleware implements MiddlewareInterface
 {
     use PostTrait;
     use ErrorTrait;
+
+    /**
+     * @var XmlEncodeService
+     */
+    private $xmlEncodeService;
+
+    /**
+     * @param XmlEncodeService $xmlEncodeService
+     */
+    public function __construct(XmlEncodeService $xmlEncodeService)
+    {
+        $this->xmlEncodeService = $xmlEncodeService;
+    }
 
     /**
      * @param  RequestInterface            $request
@@ -35,11 +48,11 @@ class XmlEncodeMiddleware implements MiddlewareInterface
             return resolve($request);
         }
 
-        $key = key($body->getParsedContents());
-        $xml = Array2XML::createXML($key, $body->getParsedContents()[$key])->saveXML();
-        $body = new BufferStream(strlen($xml));
-        $body->write($xml);
+        return $this->xmlEncodeService->encode($body->getParsedContents())->then(function (string $xml) use ($request) {
+            $body = new BufferStream(strlen($xml));
+            $body->write($xml);
 
-        return resolve($request->withBody($body)->withAddedHeader('Content-Type', 'text/xml'));
+            return resolve($request->withBody($body)->withAddedHeader('Content-Type', 'text/xml'));
+        });
     }
 }

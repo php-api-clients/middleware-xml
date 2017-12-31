@@ -6,8 +6,8 @@ use ApiClients\Foundation\Middleware\Annotation\ThirdLast;
 use ApiClients\Foundation\Middleware\ErrorTrait;
 use ApiClients\Foundation\Middleware\MiddlewareInterface;
 use ApiClients\Foundation\Middleware\PreTrait;
+use ApiClients\Tools\Xml\XmlDecodeService;
 use GuzzleHttp\Psr7\BufferStream;
-use LSS\XML2Array;
 use Psr\Http\Message\ResponseInterface;
 use React\Promise\CancellablePromiseInterface;
 use React\Stream\ReadableStreamInterface;
@@ -17,6 +17,19 @@ class XmlDecodeMiddleware implements MiddlewareInterface
 {
     use PreTrait;
     use ErrorTrait;
+
+    /**
+     * @var XmlDecodeService
+     */
+    private $xmlDecodeService;
+
+    /**
+     * @param XmlDecodeService $xmlDecodeService
+     */
+    public function __construct(XmlDecodeService $xmlDecodeService)
+    {
+        $this->xmlDecodeService = $xmlDecodeService;
+    }
 
     /**
      * @param  ResponseInterface           $response
@@ -52,9 +65,8 @@ class XmlDecodeMiddleware implements MiddlewareInterface
             return resolve($response->withBody($stream));
         }
 
-        $xml = XML2Array::createArray($body);
-        $body = new XmlStream($xml);
-
-        return resolve($response->withBody($body));
+        return $this->xmlDecodeService->decode($body)->then(function (array $xml) use ($response) {
+            return resolve($response->withBody(new XmlStream($xml)));
+        });
     }
 }

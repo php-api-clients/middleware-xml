@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78ee03e572f69edbaefcb95640ecb92",
+    "content-hash": "7f121736b386e2e3b6bc1281423aff65",
     "packages": [
         {
             "name": "api-clients/middleware",
@@ -159,6 +159,47 @@
             ],
             "description": "Middleware infused clue/buzz-react",
             "time": "2017-12-19T20:58:17+00:00"
+        },
+        {
+            "name": "api-clients/xml",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-api-clients/xml.git",
+                "reference": "a1de50a322ff83ba286f4ded27e55025c0314945"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-api-clients/xml/zipball/a1de50a322ff83ba286f4ded27e55025c0314945",
+                "reference": "a1de50a322ff83ba286f4ded27e55025c0314945",
+                "shasum": ""
+            },
+            "require": {
+                "openlss/lib-array2xml": "^0.5.1",
+                "php": "^7.0",
+                "wyrihaximus/ticking-promise": "^1.6"
+            },
+            "require-dev": {
+                "api-clients/test-utilities": "^4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ApiClients\\Tools\\Xml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-jan Kiewiet",
+                    "email": "ceesjank@gmail.com"
+                }
+            ],
+            "description": "Services taking care of encoding and decoding XML bodies",
+            "time": "2017-12-31T22:23:57+00:00"
         },
         {
             "name": "clue/buzz-react",
@@ -1126,6 +1167,53 @@
             ],
             "description": "Request middleware",
             "time": "2017-06-19T15:02:15+00:00"
+        },
+        {
+            "name": "wyrihaximus/ticking-promise",
+            "version": "1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WyriHaximus/TickingPromise.git",
+                "reference": "6b9f9abc74bb52ba3a479f8d3b8889579cd2cd6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WyriHaximus/TickingPromise/zipball/6b9f9abc74bb52ba3a479f8d3b8889579cd2cd6f",
+                "reference": "6b9f9abc74bb52ba3a479f8d3b8889579cd2cd6f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^5.4",
+                "react/event-loop": "^1.0 || ^0.5 || ^0.4",
+                "react/promise": "~2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4",
+                "squizlabs/php_codesniffer": "^1.5.6",
+                "vectorface/dunit": "~1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WyriHaximus\\React\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com",
+                    "homepage": "http://wyrihaximus.net/"
+                }
+            ],
+            "description": "Wrapping ticks into a promise",
+            "time": "2017-10-31T21:46:39+00:00"
         }
     ],
     "packages-dev": [
@@ -3820,7 +3908,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "api-clients/xml": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
