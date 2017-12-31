@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f121736b386e2e3b6bc1281423aff65",
+    "content-hash": "7a0cf4ad4a7ab78a3c90b189efbf87a3",
     "packages": [
         {
             "name": "api-clients/middleware",
@@ -162,7 +162,7 @@
         },
         {
             "name": "api-clients/xml",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-api-clients/xml.git",
@@ -3908,9 +3908,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "api-clients/xml": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
